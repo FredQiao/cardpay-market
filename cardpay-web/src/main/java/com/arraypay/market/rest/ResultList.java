@@ -38,6 +38,10 @@ public class ResultList<T> extends AbstractResult {
         super(code);
     }
 
+    public ResultList(String code, String message) {
+        super(code, message);
+    }
+
     public List<T> getDataList() {
         return dataList;
     }

@@ -28,6 +28,6 @@ public class ExceptionHandleAdvice {
     @ResponseBody
     @ExceptionHandler(value = CommonException.class)
     public ResultData myErrorHandler(CommonException ex) {
-        return ResultData.error(ex.getCode());
+        return ResultData.error(ex.getCode(), ex.getMessage());
     }
 }

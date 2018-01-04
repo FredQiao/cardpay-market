@@ -20,4 +20,16 @@ public class UserService extends BaseService{
         Pageable request = buildPageRequest(pageNumber);
         return userRepository.findAll(request);
     }
+
+    public User getUserByUsernameAndPwd(String username, String password){
+        return userRepository.getUserByUsernameAndPassword(username, password);
+    }
+
+    public User saveUser(User user){
+        return userRepository.save(user);
+    }
+
+    public User getUserById(String id){
+        return userRepository.getOne(id);
+    }
 }

@@ -23,7 +23,7 @@ public class UserController {
     @Permission
     @ApiOperation(value = "获取用户列表")
     @RequestMapping("/list")
-    public ResultList indexMobile(@RequestParam("pageNumber") int pageNumber, HttpServletRequest request){
+    public ResultList indexMobile(@RequestParam("pageNumber") int pageNumber, String userId, String token , HttpServletRequest request){
         return ResultList.list(userService.listUsers(pageNumber));
     }
 }

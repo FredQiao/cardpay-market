@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.arraypay</groupId>
-	<artifactId>market</artifactId>
+	<artifactId>cardpay-market</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
     <modules>
         <module>cardpay-dao</module>
@@ -14,7 +14,7 @@
     </modules>
     <packaging>pom</packaging>
 
-	<name>market</name>
+	<name>cardpay-market</name>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

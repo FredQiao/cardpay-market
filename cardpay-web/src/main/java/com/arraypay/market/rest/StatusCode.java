@@ -8,6 +8,7 @@ public enum StatusCode {
     SUCCESS("000000", "成功"),
     SYS_ERROR("000001", "系统错误"),
     INVALID_PARAM("000002", "参数错误"),
+    USER_NOT_EXIST("000003", "用户不存在"),
     PERMISSION_ERROR("100001", "认证错误");
 
     private String code;

@@ -21,8 +21,17 @@ public class ResultData<T> extends AbstractResult {
         return new ResultData(code);
     }
 
+    @SuppressWarnings(value = "unchecked")
+    public static <T> ResultData<T> error(String code, String message) {
+        return new ResultData(code, message);
+    }
+
     public ResultData(String code) {
         super(code);
+    }
+
+    public ResultData(String code, String message) {
+        super(code, message);
     }
 
     public static <T> ResultData<T> one(T obj) {
