@@ -8,6 +8,8 @@ public class TokenModel {
     private String token;
     private Date expiredTime;
 
+    public TokenModel() {}
+
     public TokenModel(String userId, String token, Date expiredTime) {
         this.userId = userId;
         this.token = token;
