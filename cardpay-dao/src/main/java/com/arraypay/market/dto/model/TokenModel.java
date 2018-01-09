@@ -5,15 +5,17 @@ import java.util.Date;
 public class TokenModel {
 
     private String userId;
-    private String token;
-    private Date expiredTime;
+    private String accessToken;
+    private String refreshToken;
+    private Date accessTokenExpiredTime;
 
     public TokenModel() {}
 
-    public TokenModel(String userId, String token, Date expiredTime) {
+    public TokenModel(String userId, String accessToken, String refreshToken, Date accessTokenExpiredTime) {
         this.userId = userId;
-        this.token = token;
-        this.expiredTime = expiredTime;
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
+        this.accessTokenExpiredTime = accessTokenExpiredTime;
     }
 
     public String getUserId() {
@@ -24,19 +26,27 @@ public class TokenModel {
         this.userId = userId;
     }
 
-    public String getToken() {
-        return token;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
-    public Date getExpiredTime() {
-        return expiredTime;
+    public String getRefreshToken() {
+        return refreshToken;
     }
 
-    public void setExpiredTime(Date expiredTime) {
-        this.expiredTime = expiredTime;
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+    public Date getAccessTokenExpiredTime() {
+        return accessTokenExpiredTime;
+    }
+
+    public void setAccessTokenExpiredTime(Date accessTokenExpiredTime) {
+        this.accessTokenExpiredTime = accessTokenExpiredTime;
     }
 }

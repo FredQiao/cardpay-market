@@ -6,16 +6,16 @@ import java.util.Date;
 public class DateUtils {
 
     /**
-     * 获取sec秒之后的时间
+     * 获取sec小時之后的时间
      *
-     * @param sec 秒数
+     * @param hours 秒数
      * @return
      */
-    public static Date getNewDateByAddSecond(int sec) {
+    public static Date getNewDateByAddSecond(int hours) {
         Date date = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        cal.add(Calendar.SECOND, sec);
+        cal.add(Calendar.HOUR_OF_DAY, hours);
         return cal.getTime();
     }
 

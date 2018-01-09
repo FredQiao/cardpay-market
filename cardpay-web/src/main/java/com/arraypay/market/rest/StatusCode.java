@@ -9,7 +9,11 @@ public enum StatusCode {
     SYS_ERROR("000001", "系统错误"),
     INVALID_PARAM("000002", "参数错误"),
     USER_NOT_EXIST("000003", "用户不存在"),
-    PERMISSION_ERROR("100001", "认证错误");
+    PERMISSION_ERROR("100001", "认证错误"),
+    ACCESS_TOKEN_INVALID("100002", "access_token错误"),
+    ACCESS_TOKEN_EXPIRED("100003", "access_token过期"),
+    REFRESH_TOKEN_INVALID("100004", "refresh_token错误"),
+    REFRESH_TOKEN_EXPIRED("100005", "refresh_token过期");
 
     private String code;
     private String message;

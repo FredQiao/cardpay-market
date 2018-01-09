@@ -37,16 +37,28 @@ public class User {
     private String password;
 
     /**
-     * token
+     * access_token
      */
     @Column
-    private String token;
+    private String accessToken;
 
     /**
-     * token过期时间
+     * access_token过期时间
      */
     @Column
-    private Date expiredTime;
+    private Date atExpiredTime;
+
+    /**
+     * refresh_token
+     */
+    @Column
+    private String refreshToken;
+
+    /**
+     * refresh_token过期时间
+     */
+    @Column
+    private Date rtExpiredTime;
 
 
     public User(){
@@ -77,19 +89,35 @@ public class User {
         this.password = password;
     }
 
-    public String getToken() {
-        return token;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
-    public Date getExpiredTime() {
-        return expiredTime;
+    public Date getAtExpiredTime() {
+        return atExpiredTime;
     }
 
-    public void setExpiredTime(Date expiredTime) {
-        this.expiredTime = expiredTime;
+    public void setAtExpiredTime(Date atExpiredTime) {
+        this.atExpiredTime = atExpiredTime;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+    public Date getRtExpiredTime() {
+        return rtExpiredTime;
+    }
+
+    public void setRtExpiredTime(Date rtExpiredTime) {
+        this.rtExpiredTime = rtExpiredTime;
     }
 }

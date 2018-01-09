@@ -32,4 +32,8 @@ public class UserService extends BaseService{
     public User getUserById(String id){
         return userRepository.getOne(id);
     }
+
+    public User getUserByRefreshToken(String refreshToken){
+        return userRepository.getUserByRefreshToken(refreshToken);
+    }
 }

@@ -10,4 +10,6 @@ public interface UserRepository extends JpaRepository<User, String> {
     Page<User> findAll(Pageable pageable);
 
     User getUserByUsernameAndPassword(String username, String password);
+
+    User getUserByRefreshToken(String refreshToken);
 }
