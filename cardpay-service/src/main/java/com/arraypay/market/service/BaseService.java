@@ -15,15 +15,29 @@ public class BaseService {
     @Value("${spring.paging.default-size}")
     int PAGE_SIZE;
 
-    //构建PageRequest
-    protected Pageable buildPageRequest(int pageNumber) {
-        Sort sort = new Sort(Sort.Direction.DESC, "id");
-        return new PageRequest(pageNumber - 1, PAGE_SIZE, sort);
+    protected Pageable buildPageRequest() {
+        return buildPageRequest(1);
     }
 
-    //构建PageRequest
-    protected Pageable buildPageRequest(int pageNumber, String sortColumn) {
-        Sort sort = new Sort(Sort.Direction.DESC, sortColumn);
-        return new PageRequest(pageNumber - 1, PAGE_SIZE, sort);
+    protected Pageable buildPageRequest(Integer pageNumber) {
+        return buildPageRequest(pageNumber, PAGE_SIZE);
     }
+
+    protected Pageable buildPageRequest(Integer pageNumber, Integer pageSize) {
+        return buildPageRequest(pageNumber, pageSize, "id");
+    }
+
+    protected Pageable buildPageRequest(Integer pageNumber, Integer pageSize, String sortColumn) {
+        return buildPageRequest(pageNumber, pageSize, sortColumn, Sort.Direction.DESC);
+    }
+
+    protected Pageable buildPageRequest(Integer pageNumber, Integer pageSize, String sortColumn, Sort.Direction sortType) {
+        pageNumber = pageNumber == null? 1:pageNumber;
+        pageSize = pageSize == null? PAGE_SIZE:pageSize;
+        sortColumn = sortColumn == null? "id":sortColumn;
+        sortType = sortType == null? Sort.Direction.DESC:sortType;
+        Sort sort = new Sort(sortType, sortColumn);
+        return new PageRequest(pageNumber - 1, pageSize, sort);
+    }
+
 }

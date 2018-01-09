@@ -16,7 +16,7 @@ public class UserService extends BaseService{
     @Autowired
     private UserRepository userRepository;
 
-    public Page<User> listUsers(int pageNumber){
+    public Page<User> listUsers(Integer pageNumber){
         Pageable request = buildPageRequest(pageNumber);
         return userRepository.findAll(request);
     }

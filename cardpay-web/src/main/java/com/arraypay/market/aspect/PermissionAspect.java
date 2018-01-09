@@ -1,12 +1,15 @@
 package com.arraypay.market.aspect;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.arraypay.market.annotation.Permission;
+import com.arraypay.market.constant.Constant;
 import com.arraypay.market.dto.entity.User;
+import com.arraypay.market.dto.form.TokenForm;
 import com.arraypay.market.exception.CommonException;
 import com.arraypay.market.rest.StatusCode;
 import com.arraypay.market.service.UserService;
 import com.arraypay.market.util.DateUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -15,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Aspect
@@ -37,23 +39,27 @@ public class PermissionAspect {
     @Before(value = "per()&&@annotation(annotation)")
     public void doBefore(JoinPoint joinPoint, Permission annotation) {
         Object[] args = joinPoint.getArgs();
-        if(args == null || args.length < 1){
+        JSONObject prams = null;
+        for(Object c:args ){
+            if(c instanceof TokenForm){
+                TokenForm dto = (TokenForm) c;
+                prams = JSONObject.parseObject(JSON.toJSONString(dto));
+                break;
+            }
+        }
+
+        if(prams == null || prams.isEmpty()){
             throw new CommonException(StatusCode.INVALID_PARAM.getCode(), StatusCode.INVALID_PARAM.getMessage());
         }
 
-        //Controller中所有方法的参数，最后一个参数必须是Request
-        HttpServletRequest request = (HttpServletRequest) args[args.length-1];
-
-        String token = request.getParameter("token");
-        String userId = request.getParameter("userId");
-
-        if(StringUtils.isEmpty(token)){
+        if(!prams.containsKey(Constant.AuthorizationKey.CUSTOMER_TOKEN)){
             throw new CommonException(StatusCode.PERMISSION_ERROR.getCode(), "缺少token参数");
         }
-
-        if(StringUtils.isEmpty(userId)){
+        String token = prams.getString(Constant.AuthorizationKey.CUSTOMER_TOKEN);
+        if(!prams.containsKey(Constant.AuthorizationKey.CUSTOMER_USERID)){
             throw new CommonException(StatusCode.PERMISSION_ERROR.getCode(), "缺少userId参数");
         }
+        String userId = prams.getString(Constant.AuthorizationKey.CUSTOMER_USERID);
 
         User user = userService.getUserById(userId);
         if(user == null){

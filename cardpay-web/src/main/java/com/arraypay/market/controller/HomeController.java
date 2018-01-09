@@ -6,15 +6,14 @@ import com.arraypay.market.rest.ResultData;
 import com.arraypay.market.rest.StatusCode;
 import com.arraypay.market.service.UserService;
 import com.arraypay.market.util.DateUtils;
-import org.apache.commons.lang3.StringUtils;
+import com.arraypay.market.util.MD5Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.arraypay.market.util.MD5Utils;
 
 import java.util.Date;
 import java.util.UUID;
@@ -30,7 +29,7 @@ public class HomeController {
     @Value("${spring.token.expire-time}")
     private Integer expireTime;
 
-    @RequestMapping("/get_token")
+    @GetMapping("/get_token")
     public ResultData getToken(@RequestParam String username, @RequestParam String password){
         logger.info("---get token start---");
         if(username == null || password == null){

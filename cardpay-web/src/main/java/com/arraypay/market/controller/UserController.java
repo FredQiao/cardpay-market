@@ -1,16 +1,13 @@
 package com.arraypay.market.controller;
 
 import com.arraypay.market.annotation.Permission;
+import com.arraypay.market.dto.form.TokenForm;
 import com.arraypay.market.rest.ResultList;
 import com.arraypay.market.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.*;
 
 @Api
 @RestController
@@ -22,8 +19,8 @@ public class UserController {
 
     @Permission
     @ApiOperation(value = "获取用户列表")
-    @RequestMapping("/list")
-    public ResultList indexMobile(@RequestParam("pageNumber") int pageNumber, String userId, String token , HttpServletRequest request){
+    @PostMapping("/list")
+    public ResultList indexMobile(@RequestParam(value = "pageNumber", required = false) Integer pageNumber, @RequestBody TokenForm token){
         return ResultList.list(userService.listUsers(pageNumber));
     }
 }
