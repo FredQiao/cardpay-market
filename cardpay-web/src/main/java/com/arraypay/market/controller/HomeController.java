@@ -11,14 +11,11 @@ import com.arraypay.market.util.MD5Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
-import java.util.UUID;
 
 @RestController
 public class HomeController {
@@ -27,12 +24,6 @@ public class HomeController {
 
     @Autowired
     private UserService userService;
-
-    @Value("${spring.access_token.expire-time}")
-    private Integer atExpireTime;
-
-    @Value("${spring.refresh_token.expire-time}")
-    private Integer rtExpireTime;
 
     @PostMapping("/get_token")
     public ResultData getToken(@RequestParam String username, @RequestParam String password){
@@ -49,17 +40,7 @@ public class HomeController {
         }
 
         logger.info("---save token---");
-        String accessToken = UUID.randomUUID().toString().replaceAll("-","");
-        Date atExpiredTime = DateUtils.getNewDateByAddSecond(atExpireTime);
-        String refreshToken = UUID.randomUUID().toString().replaceAll("-","");
-        Date rtExpiredTime = DateUtils.getNewDateByAddSecond(rtExpireTime);
-
-        user.setAccessToken(accessToken);
-        user.setAtExpiredTime(atExpiredTime);
-        user.setRefreshToken(refreshToken);
-        user.setRtExpiredTime(rtExpiredTime);
-
-        userService.saveUser(user);
+        user = userService.genToken(user);
 
         logger.info("---get token done---");
         return ResultData.one(new TokenModel(user.getId(), user.getAccessToken(), user.getRefreshToken(), user.getAtExpiredTime()));
@@ -89,20 +70,9 @@ public class HomeController {
         }
 
         logger.info("---save token---");
-        String accessToken = UUID.randomUUID().toString().replaceAll("-","");
-        Date atExpiredTime = DateUtils.getNewDateByAddSecond(atExpireTime);
-        refreshToken = UUID.randomUUID().toString().replaceAll("-","");
-        Date rtExpiredTime = DateUtils.getNewDateByAddSecond(rtExpireTime);
-
-        user.setAccessToken(accessToken);
-        user.setAtExpiredTime(atExpiredTime);
-        user.setRefreshToken(refreshToken);
-        user.setRtExpiredTime(rtExpiredTime);
-
-        userService.saveUser(user);
+        user = userService.genToken(user);
 
         logger.info("---refresh token done---");
         return ResultData.one(new TokenModel(user.getId(), user.getAccessToken(), user.getRefreshToken(), user.getAtExpiredTime()));
-
     }
 }

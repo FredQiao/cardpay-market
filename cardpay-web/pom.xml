@@ -17,12 +17,6 @@
             <artifactId>cardpay-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.arraypay</groupId>
-            <artifactId>cardpay-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 
     <build>
