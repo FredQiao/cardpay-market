@@ -28,6 +28,8 @@ public class UserService extends BaseService{
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RedisService redisService;
 
     public Page<User> listUsers(Integer pageNumber){
         Pageable request = buildPageRequest(pageNumber);
@@ -55,11 +57,20 @@ public class UserService extends BaseService{
         String refreshToken = UUID.randomUUID().toString().replaceAll("-","");
         Date rtExpiredTime = DateUtils.getNewDateByAddSecond(rtExpireTime);
 
+        /**
+         * Token存在数据库中
+         */
         user.setAccessToken(accessToken);
         user.setAtExpiredTime(atExpiredTime);
         user.setRefreshToken(refreshToken);
         user.setRtExpiredTime(rtExpiredTime);
+        user = userRepository.save(user);
 
-        return userRepository.save(user);
+        /**
+         * Token存在Redis中
+         */
+        redisService.set("access_token_id", accessToken, atExpiredTime.getTime());
+        redisService.set("refresh_token_id", refreshToken, rtExpiredTime.getTime());
+        return user;
     }
 }

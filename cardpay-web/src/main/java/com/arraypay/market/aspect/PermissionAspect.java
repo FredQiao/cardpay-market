@@ -4,6 +4,7 @@ import com.arraypay.market.annotation.Permission;
 import com.arraypay.market.dto.entity.User;
 import com.arraypay.market.exception.CommonException;
 import com.arraypay.market.rest.StatusCode;
+import com.arraypay.market.service.RedisService;
 import com.arraypay.market.service.UserService;
 import com.arraypay.market.util.DateUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +25,8 @@ public class PermissionAspect {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private RedisService redisService;
 
     @Value("${spring.access_token.expire-time}")
     private Integer expireTime;
@@ -59,7 +62,7 @@ public class PermissionAspect {
             throw new CommonException(StatusCode.USER_NOT_EXIST.getCode(), StatusCode.USER_NOT_EXIST.getMessage());
         }
 
-        String myToken = user.getAccessToken();
+        String myToken = user.getAccessToken();  // 从Redis中获取：redisService.get("access_token_id");
         Date eTime = user.getAtExpiredTime();
 
         if(!token.equals(myToken)){

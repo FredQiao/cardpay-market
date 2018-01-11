@@ -5,6 +5,7 @@ import com.arraypay.market.dto.model.TokenModel;
 import com.arraypay.market.exception.CommonException;
 import com.arraypay.market.rest.ResultData;
 import com.arraypay.market.rest.StatusCode;
+import com.arraypay.market.service.RedisService;
 import com.arraypay.market.service.SmsService;
 import com.arraypay.market.service.UserService;
 import com.arraypay.market.util.DateUtils;
@@ -12,7 +13,6 @@ import com.arraypay.market.util.MD5Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,7 +32,7 @@ public class HomeController {
     private SmsService smsService;
 
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private RedisService redisService;
 
     @PostMapping("/get_token")
     public ResultData getToken(@RequestParam String username, @RequestParam String password){
@@ -69,6 +69,11 @@ public class HomeController {
             return ResultData.error(StatusCode.USER_NOT_EXIST.getCode());
         }
 
+        /**
+         * 从Redis中获取refreshToken，并与前端传入对比
+         * redisService.get("refresh_token_id");
+         */
+
         if(!refreshToken.equals(user.getRefreshToken())){
             throw new CommonException(StatusCode.REFRESH_TOKEN_INVALID.getCode(), StatusCode.REFRESH_TOKEN_INVALID.getMessage());
         }
@@ -92,7 +97,8 @@ public class HomeController {
 
     @GetMapping("sms1")
     public void testSms1() throws Exception{
-        stringRedisTemplate.opsForValue().set("b", "111");
+        redisService.set("k", "{'id':'1'}");
+        System.out.println(redisService.get("k"));
 //        smsService.multiSend();
     }
 }

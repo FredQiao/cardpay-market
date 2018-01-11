@@ -1,6 +1,6 @@
 package com.arraypay.market.service;
 
-import com.arraypay.market.SmsSender;
+import com.arraypay.market.sms.SmsSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
