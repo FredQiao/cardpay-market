@@ -69,8 +69,8 @@ public class UserService extends BaseService{
         /**
          * Token存在Redis中
          */
-        redisService.set("access_token_id", accessToken, atExpiredTime.getTime());
-        redisService.set("refresh_token_id", refreshToken, rtExpiredTime.getTime());
+        redisService.set("access_token_" + user.getId(), accessToken, atExpireTime);
+        redisService.set("refresh_token_" + user.getId(), refreshToken, rtExpireTime);
         return user;
     }
 }

@@ -71,7 +71,7 @@ public class HomeController {
 
         /**
          * 从Redis中获取refreshToken，并与前端传入对比
-         * redisService.get("refresh_token_id");
+         * redisService.get("refresh_token_" + userId);
          */
 
         if(!refreshToken.equals(user.getRefreshToken())){

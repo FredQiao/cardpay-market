@@ -20,7 +20,7 @@ public class RedisService {
     }
 
     public void set(String key, String value, long expiredTime) {
-        set(key, value, expiredTime, TimeUnit.DAYS);
+        set(key, value, expiredTime, TimeUnit.HOURS);
     }
 
     public void set(String key, String value, long expiredTime, TimeUnit timeUnit) {

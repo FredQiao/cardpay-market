@@ -62,7 +62,7 @@ public class PermissionAspect {
             throw new CommonException(StatusCode.USER_NOT_EXIST.getCode(), StatusCode.USER_NOT_EXIST.getMessage());
         }
 
-        String myToken = user.getAccessToken();  // 从Redis中获取：redisService.get("access_token_id");
+        String myToken = user.getAccessToken();  // 从Redis中获取：redisService.get("access_token_" + userId);
         Date eTime = user.getAtExpiredTime();
 
         if(!token.equals(myToken)){
