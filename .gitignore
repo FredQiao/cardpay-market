@@ -148,3 +148,5 @@
 /cardpay-web/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
 /cardpay-web/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
 /cardpay-common/target/classes/com/arraypay/market/*.class
+/cardpay-common/target/classes/com/arraypay/market/sms/*.class
+/cardpay-service/target/classes/com/arraypay/market/service/*.class
