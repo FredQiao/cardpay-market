@@ -5,6 +5,7 @@ import com.arraypay.market.dto.entity.User;
 import com.arraypay.market.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,7 @@ public class UserService extends BaseService{
         return userRepository.save(user);
     }
 
+    @Cacheable(value = "users")
     public User getUserById(String id){
         return userRepository.getOne(id);
     }

@@ -12,6 +12,7 @@ import com.arraypay.market.util.MD5Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +30,9 @@ public class HomeController {
 
     @Autowired
     private SmsService smsService;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     @PostMapping("/get_token")
     public ResultData getToken(@RequestParam String username, @RequestParam String password){
@@ -88,6 +92,7 @@ public class HomeController {
 
     @GetMapping("sms1")
     public void testSms1() throws Exception{
-        smsService.multiSend();
+        stringRedisTemplate.opsForValue().set("b", "111");
+//        smsService.multiSend();
     }
 }

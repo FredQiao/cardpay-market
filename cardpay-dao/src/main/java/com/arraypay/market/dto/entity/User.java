@@ -15,7 +15,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "sys_user")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class User {
+public class User implements Serializable{
 
     @Id
     @NonNull
@@ -63,6 +63,16 @@ public class User {
 
     public User(){
         this.id = UUID.randomUUID().toString().replaceAll("-","");
+    }
+
+    public User(String id, String username, String password, String accessToken, Date atExpiredTime, String refreshToken, Date rtExpiredTime) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.accessToken = accessToken;
+        this.atExpiredTime = atExpiredTime;
+        this.refreshToken = refreshToken;
+        this.rtExpiredTime = rtExpiredTime;
     }
 
     public String getPassword() {
