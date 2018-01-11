@@ -5,12 +5,14 @@ import com.arraypay.market.dto.model.TokenModel;
 import com.arraypay.market.exception.CommonException;
 import com.arraypay.market.rest.ResultData;
 import com.arraypay.market.rest.StatusCode;
+import com.arraypay.market.service.SmsService;
 import com.arraypay.market.service.UserService;
 import com.arraypay.market.util.DateUtils;
 import com.arraypay.market.util.MD5Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +26,9 @@ public class HomeController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private SmsService smsService;
 
     @PostMapping("/get_token")
     public ResultData getToken(@RequestParam String username, @RequestParam String password){
@@ -74,5 +79,15 @@ public class HomeController {
 
         logger.info("---refresh token done---");
         return ResultData.one(new TokenModel(user.getId(), user.getAccessToken(), user.getRefreshToken(), user.getAtExpiredTime()));
+    }
+
+    @GetMapping("sms")
+    public void testSms() throws Exception{
+        smsService.send();
+    }
+
+    @GetMapping("sms1")
+    public void testSms1() throws Exception{
+        smsService.multiSend();
     }
 }
