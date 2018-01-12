@@ -7,7 +7,6 @@ import com.arraypay.market.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +26,7 @@ public class UserController {
     @ApiOperation(value = "获取用户列表")
     @PostMapping("/list")
     public ResultList indexMobile(@RequestParam(value = "pageNumber", required = false) Integer pageNumber, HttpServletRequest request){
-        return ResultList.list(userService.listUsers(pageNumber));
+        return ResultList.pages(userService.listUsers(pageNumber));
     }
 
     @PostMapping("/get")

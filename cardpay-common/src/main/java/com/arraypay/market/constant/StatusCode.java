@@ -1,4 +1,4 @@
-package com.arraypay.market.rest;
+package com.arraypay.market.constant;
 
 /**
  * Created by fred on 2017/12/5.
@@ -9,6 +9,10 @@ public enum StatusCode {
     SYS_ERROR("000001", "系统错误"),
     INVALID_PARAM("000002", "参数错误"),
     USER_NOT_EXIST("000003", "用户不存在"),
+    USER_EXIST("000004", "用户已存在"),
+    ACTIVE_CODE_INVALID("000005", "短信验证码错误"),
+    ACTIVE_CODE_EXPIRED("000006", "短信验证码过期"),
+
     PERMISSION_ERROR("100001", "认证错误"),
     ACCESS_TOKEN_INVALID("100002", "access_token错误"),
     ACCESS_TOKEN_EXPIRED("100003", "access_token过期"),

@@ -3,7 +3,7 @@ package com.arraypay.market.aspect;
 import com.arraypay.market.annotation.Permission;
 import com.arraypay.market.dto.entity.User;
 import com.arraypay.market.exception.CommonException;
-import com.arraypay.market.rest.StatusCode;
+import com.arraypay.market.constant.StatusCode;
 import com.arraypay.market.service.RedisService;
 import com.arraypay.market.service.UserService;
 import com.arraypay.market.util.DateUtils;
@@ -13,7 +13,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,9 +27,6 @@ public class PermissionAspect {
     @Autowired
     private RedisService redisService;
 
-    @Value("${spring.access_token.expire-time}")
-    private Integer expireTime;
-
     //切面点
     @Pointcut("execution(public * com.arraypay.market.controller..*.*(..))")
     public void per(){
@@ -41,7 +37,7 @@ public class PermissionAspect {
     public void doBefore(JoinPoint joinPoint, Permission annotation) {
         Object[] args = joinPoint.getArgs();
         if(args == null || args.length < 1){
-            throw new CommonException(StatusCode.INVALID_PARAM.getCode(), StatusCode.INVALID_PARAM.getMessage());
+            throw new CommonException(StatusCode.INVALID_PARAM);
         }
 
         //Controller中所有方法的参数，最后一个参数必须是Request
@@ -59,19 +55,19 @@ public class PermissionAspect {
 
         User user = userService.getUserById(userId);
         if(user == null){
-            throw new CommonException(StatusCode.USER_NOT_EXIST.getCode(), StatusCode.USER_NOT_EXIST.getMessage());
+            throw new CommonException(StatusCode.USER_NOT_EXIST);
         }
 
         String myToken = user.getAccessToken();  // 从Redis中获取：redisService.get("access_token_" + userId);
         Date eTime = user.getAtExpiredTime();
 
         if(!token.equals(myToken)){
-            throw new CommonException(StatusCode.ACCESS_TOKEN_INVALID.getCode(), StatusCode.ACCESS_TOKEN_INVALID.getMessage());
+            throw new CommonException(StatusCode.ACCESS_TOKEN_INVALID);
         }
 
         if(DateUtils.getDistanceBetweenTimes(new Date(), eTime) > 0){
             // 当前时间大于过期时间，token已过期
-            throw new CommonException(StatusCode.ACCESS_TOKEN_EXPIRED.getCode(), StatusCode.ACCESS_TOKEN_EXPIRED.getMessage());
+            throw new CommonException(StatusCode.ACCESS_TOKEN_EXPIRED);
         }
     }
 }

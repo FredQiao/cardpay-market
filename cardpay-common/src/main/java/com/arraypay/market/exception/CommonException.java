@@ -1,5 +1,7 @@
 package com.arraypay.market.exception;
 
+import com.arraypay.market.constant.StatusCode;
+
 public class CommonException extends RuntimeException {
 
     private static final long serialVersionUID = -7171148211322503748L;
@@ -27,6 +29,11 @@ public class CommonException extends RuntimeException {
         super (message);
         this.message = message;
         this.code = code;
+    }
+
+    public CommonException(StatusCode statusCode) {
+        this.code = statusCode.getCode();
+        this.message = statusCode.getMessage();
     }
 
     public CommonException(String message) {

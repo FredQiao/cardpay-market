@@ -1,5 +1,7 @@
 package com.arraypay.market.rest;
 
+import com.arraypay.market.constant.StatusCode;
+
 /**
  * Created by fred on 2017/12/5.
  */
@@ -8,17 +10,17 @@ public class ResultData<T> extends AbstractResult {
 
     @SuppressWarnings(value = "unchecked")
     public static <T> ResultData<T> ok() {
-        return new ResultData(StatusCode.SUCCESS.getCode());
+        return new ResultData(StatusCode.SUCCESS);
     }
 
     @SuppressWarnings(value = "unchecked")
     public static <T> ResultData<T> error() {
-        return new ResultData(StatusCode.SYS_ERROR.getCode());
+        return new ResultData(StatusCode.SYS_ERROR);
     }
 
     @SuppressWarnings(value = "unchecked")
-    public static <T> ResultData<T> error(String code) {
-        return new ResultData(code);
+    public static <T> ResultData<T> error(StatusCode statusCode) {
+        return new ResultData(statusCode);
     }
 
     @SuppressWarnings(value = "unchecked")
@@ -26,8 +28,8 @@ public class ResultData<T> extends AbstractResult {
         return new ResultData(code, message);
     }
 
-    public ResultData(String code) {
-        super(code);
+    public ResultData(StatusCode statusCode) {
+        super(statusCode);
     }
 
     public ResultData(String code, String message) {
@@ -35,7 +37,7 @@ public class ResultData<T> extends AbstractResult {
     }
 
     public static <T> ResultData<T> one(T obj) {
-        ResultData<T> res = new ResultData(StatusCode.SUCCESS.getCode());
+        ResultData<T> res = new ResultData(StatusCode.SUCCESS);
         res.data = obj;
         return res;
     }

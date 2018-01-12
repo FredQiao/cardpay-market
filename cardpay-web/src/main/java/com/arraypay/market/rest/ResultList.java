@@ -1,5 +1,6 @@
 package com.arraypay.market.rest;
 
+import com.arraypay.market.constant.StatusCode;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -15,17 +16,23 @@ public class ResultList<T> extends AbstractResult {
     private Integer pageSize;  //当前页条数
 
     public static <T> ResultList<T> error() {
-        return new ResultList(StatusCode.SYS_ERROR.getCode());
+        return new ResultList(StatusCode.SYS_ERROR);
     }
 
     @SuppressWarnings(value = "unchecked")
-    public static <T> ResultList<T> error(String code) {
-        return new ResultList(code);
+    public static <T> ResultList<T> error(StatusCode statusCode) {
+        return new ResultList(statusCode);
     }
 
     @SuppressWarnings(value = "unchecked")
-    public static <T> ResultList<T> list(Page<T> datas) {
-        ResultList<T> res =  new ResultList(StatusCode.SUCCESS.getCode());
+    public static <T> ResultList<T> list(List<T> datas) {
+        ResultList<T> res =  new ResultList(StatusCode.SUCCESS);
+        res.dataList = datas;
+        return res;
+    }
+
+    public static <T> ResultList<T> pages(Page<T> datas) {
+        ResultList<T> res =  new ResultList(StatusCode.SUCCESS);
         res.dataList = datas.getContent();
         res.totalPage = datas.getTotalPages() + 1;
         res.totalNumber = (int)datas.getTotalElements();
@@ -34,8 +41,8 @@ public class ResultList<T> extends AbstractResult {
         return res;
     }
 
-    public ResultList(String code) {
-        super(code);
+    public ResultList(StatusCode statusCode) {
+        super(statusCode);
     }
 
     public ResultList(String code, String message) {

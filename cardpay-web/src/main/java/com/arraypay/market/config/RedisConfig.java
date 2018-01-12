@@ -14,7 +14,6 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.lang.reflect.Method;
 
@@ -23,6 +22,7 @@ import java.lang.reflect.Method;
 public class RedisConfig extends CachingConfigurerSupport{
 
     @Bean
+    @Override
     public KeyGenerator keyGenerator() {
         return new KeyGenerator() {
             @Override
@@ -40,12 +40,14 @@ public class RedisConfig extends CachingConfigurerSupport{
         };
     }
 
+
+
     @SuppressWarnings("rawtypes")
     @Bean
     public CacheManager cacheManager(RedisTemplate redisTemplate) {
         RedisCacheManager rcm = new RedisCacheManager(redisTemplate);
         //设置缓存过期时间
-        //rcm.setDefaultExpiration(60);//秒
+        rcm.setDefaultExpiration(60 * 60 * 2L);//秒
         return rcm;
     }
 

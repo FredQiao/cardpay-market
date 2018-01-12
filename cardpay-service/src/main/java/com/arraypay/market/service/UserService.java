@@ -1,10 +1,10 @@
 package com.arraypay.market.service;
 
+import com.arraypay.market.constant.SysProperties;
 import com.arraypay.market.dao.UserRepository;
 import com.arraypay.market.dto.entity.User;
 import com.arraypay.market.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,20 +20,20 @@ import java.util.UUID;
 @Service
 public class UserService extends BaseService{
 
-    @Value("${spring.access_token.expire-time}")
-    private Integer atExpireTime;
-
-    @Value("${spring.refresh_token.expire-time}")
-    private Integer rtExpireTime;
-
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private RedisService redisService;
+    @Autowired
+    private SysProperties properties;
 
     public Page<User> listUsers(Integer pageNumber){
         Pageable request = buildPageRequest(pageNumber);
         return userRepository.findAll(request);
+    }
+
+    public User getUserByUsername(String username){
+        return userRepository.getUserByUsername(username);
     }
 
     public User getUserByUsernameAndPwd(String username, String password){
@@ -53,9 +53,9 @@ public class UserService extends BaseService{
     @Transactional
     public User genToken(User user){
         String accessToken = UUID.randomUUID().toString().replaceAll("-","");
-        Date atExpiredTime = DateUtils.getNewDateByAddSecond(atExpireTime);
+        Date atExpiredTime = DateUtils.getNewDateByAddSecond(properties.getAtExpireTime());
         String refreshToken = UUID.randomUUID().toString().replaceAll("-","");
-        Date rtExpiredTime = DateUtils.getNewDateByAddSecond(rtExpireTime);
+        Date rtExpiredTime = DateUtils.getNewDateByAddSecond(properties.getRtExpireTime());
 
         /**
          * Token存在数据库中
@@ -69,8 +69,8 @@ public class UserService extends BaseService{
         /**
          * Token存在Redis中
          */
-        redisService.set("access_token_" + user.getId(), accessToken, atExpireTime);
-        redisService.set("refresh_token_" + user.getId(), refreshToken, rtExpireTime);
+        redisService.set("access_token_" + user.getId(), accessToken, properties.getAtExpireTime());
+        redisService.set("refresh_token_" + user.getId(), refreshToken, properties.getRtExpireTime());
         return user;
     }
 }

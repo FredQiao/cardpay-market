@@ -1,5 +1,7 @@
 package com.arraypay.market.rest;
 
+import com.arraypay.market.constant.StatusCode;
+
 /**
  * Created by fred on 2017/12/5.
  */
@@ -8,9 +10,9 @@ public class AbstractResult {
 
     String message;
 
-    public AbstractResult(String code) {
-        this.code = code;
-        this.message = StatusCode.getByCode(code).getMessage();
+    public AbstractResult(StatusCode statusCode) {
+        this.code = statusCode.getCode();
+        this.message = statusCode.getMessage();
     }
 
     public AbstractResult(String code, String message) {

@@ -150,3 +150,9 @@
 /cardpay-common/target/classes/com/arraypay/market/*.class
 /cardpay-common/target/classes/com/arraypay/market/sms/*.class
 /cardpay-service/target/classes/com/arraypay/market/service/*.class
+/cardpay-common/target/classes/com/arraypay/market/util/StringUtils.class
+/cardpay-dao/target/classes/com/arraypay/market/dao/CountryRepository.class
+/cardpay-dao/target/classes/com/arraypay/market/dto/entity/Country.class
+/cardpay-web/target/classes/com/arraypay/market/config/RedisConfig$1.class
+/cardpay-web/target/classes/com/arraypay/market/config/RedisConfig.class
+/cardpay-web/target/classes/com/arraypay/market/controller/CommonController.class

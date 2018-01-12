@@ -1,6 +1,7 @@
 package com.arraypay.market.service;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.arraypay.market.constant.SysProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -12,15 +13,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class BaseService {
 
-    @Value("${spring.paging.default-size}")
-    int PAGE_SIZE;
+    @Autowired
+    private SysProperties properties;
 
     protected Pageable buildPageRequest() {
         return buildPageRequest(1);
     }
 
     protected Pageable buildPageRequest(Integer pageNumber) {
-        return buildPageRequest(pageNumber, PAGE_SIZE);
+        return buildPageRequest(pageNumber, properties.getPageSize());
     }
 
     protected Pageable buildPageRequest(Integer pageNumber, Integer pageSize) {
@@ -33,7 +34,7 @@ public class BaseService {
 
     protected Pageable buildPageRequest(Integer pageNumber, Integer pageSize, String sortColumn, Sort.Direction sortType) {
         pageNumber = pageNumber == null? 1:pageNumber;
-        pageSize = pageSize == null? PAGE_SIZE:pageSize;
+        pageSize = pageSize == null? properties.getPageSize():pageSize;
         sortColumn = sortColumn == null? "id":sortColumn;
         sortType = sortType == null? Sort.Direction.DESC:sortType;
         Sort sort = new Sort(sortType, sortColumn);

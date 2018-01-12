@@ -2,6 +2,7 @@ package com.arraypay.market.util;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 public class DateUtils {
 
@@ -33,5 +34,8 @@ public class DateUtils {
         return date1.getTime() - date2.getTime();
     }
 
+    public static void main(String[] args){
+        System.out.println(new Random().nextInt(999999) % 900000 + 100000);
+    }
 
 }

@@ -1,12 +1,13 @@
 package com.arraypay.market.sms;
 
+import com.arraypay.market.constant.SysProperties;
 import com.github.qcloudsms.SmsMultiSender;
 import com.github.qcloudsms.SmsMultiSenderResult;
 import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -16,11 +17,8 @@ public class SmsSender {
 
     Logger logger = LoggerFactory.getLogger(SmsSender.class);
 
-    @Value("${spring.qcloudsms.appid}")
-    private Integer appid;
-
-    @Value("${spring.qcloudsms.appkey}")
-    private String appKey;
+    @Autowired
+    private SysProperties properties;
 
     private SmsSingleSender singleSender;
 
@@ -29,14 +27,14 @@ public class SmsSender {
     private void initSmsSingleSender() throws Exception{
         if(singleSender == null){
             logger.info("initSmsSingleSender");
-            singleSender = new SmsSingleSender(appid, appKey);
+            singleSender = new SmsSingleSender(properties.getAppid(), properties.getAppKey());
         }
     }
 
     private void initSmsMultiSender() throws Exception{
         if(multiSender == null){
             logger.info("initSmsMultiSender");
-            multiSender = new SmsMultiSender(appid, appKey);
+            multiSender = new SmsMultiSender(properties.getAppid(), properties.getAppKey());
         }
     }
 

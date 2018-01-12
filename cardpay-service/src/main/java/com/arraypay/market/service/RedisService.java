@@ -1,16 +1,19 @@
 package com.arraypay.market.service;
 
+import com.alibaba.fastjson.JSON;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by fred on 2017/12/5.
  */
 @Service
-public class RedisService {
+public class RedisService<T> {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -29,6 +32,22 @@ public class RedisService {
 
     public String get(String key) {
         return stringRedisTemplate.opsForValue().get(key);
+    }
+
+    public List<T> getList(String key, Class clazz) {
+        String result = get(key);
+        if(StringUtils.isNotEmpty(result)){
+            return JSON.parseArray(result, clazz);
+        }
+        return null;
+    }
+
+    public T getObject(String key) {
+        String result = get(key);
+        if(StringUtils.isNotEmpty(result)){
+            return (T)JSON.parseObject(result);
+        }
+        return null;
     }
 
 }
