@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -48,6 +49,14 @@ public class RedisService<T> {
             return (T)JSON.parseObject(result);
         }
         return null;
+    }
+
+    public void delete(String key){
+        stringRedisTemplate.delete(key);
+    }
+
+    public void delete(Collection<String> keys){
+        stringRedisTemplate.delete(keys);
     }
 
 }

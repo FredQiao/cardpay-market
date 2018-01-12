@@ -26,7 +26,7 @@ public class UserController {
     @ApiOperation(value = "获取用户列表")
     @PostMapping("/list")
     public ResultList indexMobile(@RequestParam(value = "pageNumber", required = false) Integer pageNumber, HttpServletRequest request){
-        return ResultList.pages(userService.listUsers(pageNumber));
+        return ResultList.list(userService.listUsers(pageNumber));
     }
 
     @PostMapping("/get")

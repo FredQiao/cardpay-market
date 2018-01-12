@@ -25,13 +25,7 @@ public class ResultList<T> extends AbstractResult {
     }
 
     @SuppressWarnings(value = "unchecked")
-    public static <T> ResultList<T> list(List<T> datas) {
-        ResultList<T> res =  new ResultList(StatusCode.SUCCESS);
-        res.dataList = datas;
-        return res;
-    }
-
-    public static <T> ResultList<T> pages(Page<T> datas) {
+    public static <T> ResultList<T> list(Page<T> datas) {
         ResultList<T> res =  new ResultList(StatusCode.SUCCESS);
         res.dataList = datas.getContent();
         res.totalPage = datas.getTotalPages() + 1;

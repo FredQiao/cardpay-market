@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.arraypay.market.dao.CountryRepository;
 import com.arraypay.market.dto.entity.Country;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +20,6 @@ public class CountryService extends BaseService{
     @Autowired
     private RedisService redisService;
 
-    @Cacheable(value = "countries")
     public List<Country> listCountries(){
         List<Country> countries = redisService.getList("countries", Country.class);
         if(countries != null){
