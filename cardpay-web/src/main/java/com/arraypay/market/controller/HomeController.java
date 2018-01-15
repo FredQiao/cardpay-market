@@ -152,7 +152,7 @@ public class HomeController {
     @GetMapping("sms1")
     public void testSms1() throws Exception{
         redisService.set("k", "{'id':'1'}");
-        System.out.println(redisService.get("k"));
-//        smsService.multiSend();
+        logger.info(redisService.get("k"));
+        smsService.multiSend();
     }
 }

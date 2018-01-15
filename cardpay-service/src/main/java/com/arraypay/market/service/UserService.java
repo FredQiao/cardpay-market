@@ -64,13 +64,12 @@ public class UserService extends BaseService{
         user.setAtExpiredTime(atExpiredTime);
         user.setRefreshToken(refreshToken);
         user.setRtExpiredTime(rtExpiredTime);
-        user = userRepository.save(user);
 
         /**
          * Token存在Redis中
          */
         redisService.set("access_token_" + user.getId(), accessToken, properties.getAtExpireTime());
         redisService.set("refresh_token_" + user.getId(), refreshToken, properties.getRtExpireTime());
-        return user;
+        return userRepository.save(user);
     }
 }
