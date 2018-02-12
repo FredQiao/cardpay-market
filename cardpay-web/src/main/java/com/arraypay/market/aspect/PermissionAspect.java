@@ -7,8 +7,12 @@ import com.arraypay.market.constant.StatusCode;
 import com.arraypay.market.service.RedisService;
 import com.arraypay.market.service.UserService;
 import com.arraypay.market.util.DateUtils;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -20,6 +24,7 @@ import java.util.Date;
 
 @Aspect
 @Component
+@Slf4j
 public class PermissionAspect {
 
     @Autowired
@@ -31,6 +36,17 @@ public class PermissionAspect {
     @Pointcut("execution(public * com.arraypay.market.controller..*.*(..))")
     public void per(){
         // Do nothing.
+    }
+    
+    /**
+     *返回日志
+     *@Author: zhoufu
+     *@param:
+     *@return:
+     */
+    @AfterReturning(returning = "ret", pointcut = "per()")
+    public void doAfterReturning(Object ret) throws Throwable {
+        log.info("返回数据 : " + ret);
     }
 
     @Before(value = "per()&&@annotation(annotation)")

@@ -1,23 +1,29 @@
 package com.arraypay.market.dto.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.NonNull;
+import java.io.Serializable;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NonNull;
+
+@Data
+@AllArgsConstructor
 @Entity
 @Table(name = "country")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Country implements Serializable{
 
-    @Id
+	private static final long serialVersionUID = 7171297355973621130L;
+
+	@Id
     @NonNull
     private String id;
 
@@ -50,53 +56,5 @@ public class Country implements Serializable{
 
     public Country() {
         this.id = UUID.randomUUID().toString().replaceAll("-","");
-    }
-
-    public Country(String id, String ename, String name, String domainCode, String telCode) {
-        this.id = id;
-        this.ename = ename;
-        this.name = name;
-        this.domainCode = domainCode;
-        this.telCode = telCode;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getEname() {
-        return ename;
-    }
-
-    public void setEname(String ename) {
-        this.ename = ename;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDomainCode() {
-        return domainCode;
-    }
-
-    public void setDomainCode(String domainCode) {
-        this.domainCode = domainCode;
-    }
-
-    public String getTelCode() {
-        return telCode;
-    }
-
-    public void setTelCode(String telCode) {
-        this.telCode = telCode;
     }
 }

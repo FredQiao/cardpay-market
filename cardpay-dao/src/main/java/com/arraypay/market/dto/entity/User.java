@@ -2,6 +2,9 @@ package com.arraypay.market.dto.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NonNull;
 
 import javax.persistence.Column;
@@ -12,12 +15,16 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
+@Data
+@AllArgsConstructor
 @Entity
 @Table(name = "sys_user")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User implements Serializable{
 
-    @Id
+	private static final long serialVersionUID = 2547875549887343151L;
+
+	@Id
     @NonNull
     private String id;
 
@@ -65,69 +72,4 @@ public class User implements Serializable{
         this.id = UUID.randomUUID().toString().replaceAll("-","");
     }
 
-    public User(String id, String username, String password, String accessToken, Date atExpiredTime, String refreshToken, Date rtExpiredTime) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.accessToken = accessToken;
-        this.atExpiredTime = atExpiredTime;
-        this.refreshToken = refreshToken;
-        this.rtExpiredTime = rtExpiredTime;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    public Date getAtExpiredTime() {
-        return atExpiredTime;
-    }
-
-    public void setAtExpiredTime(Date atExpiredTime) {
-        this.atExpiredTime = atExpiredTime;
-    }
-
-    public String getRefreshToken() {
-        return refreshToken;
-    }
-
-    public void setRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
-    }
-
-    public Date getRtExpiredTime() {
-        return rtExpiredTime;
-    }
-
-    public void setRtExpiredTime(Date rtExpiredTime) {
-        this.rtExpiredTime = rtExpiredTime;
-    }
 }

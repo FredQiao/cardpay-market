@@ -1,11 +1,12 @@
 package com.arraypay.market.service;
 
-import com.arraypay.market.constant.SysProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import com.arraypay.market.constant.SysProperties;
 
 /**
  * Created by fred on 2017/12/5.
